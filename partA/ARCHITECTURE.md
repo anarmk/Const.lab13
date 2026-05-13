@@ -86,3 +86,39 @@ enum Status {
 ```
 
 ## Folder structure
+const.lab13/
+├── partB/
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── page.tsx              # main dashboard
+│   │   │   ├── layout.tsx
+│   │   │   ├── tasks/
+│   │   │   │   ├── new/page.tsx      # create form
+│   │   │   │   └── [id]/edit/page.tsx
+│   │   │   └── api/
+│   │   │       └── tasks/
+│   │   │           ├── route.ts      # GET all, POST
+│   │   │           └── [id]/route.ts # GET one, PUT, DELETE
+│   │   ├── components/
+│   │   │   ├── TaskList.tsx
+│   │   │   ├── TaskCard.tsx
+│   │   │   ├── TaskForm.tsx
+│   │   │   └── FilterBar.tsx
+│   │   ├── lib/
+│   │   │   ├── prisma.ts             # Prisma client singleton
+│   │   │   └── validations.ts        # input validation helpers
+│   │   └── types/
+│   │       └── task.ts               # shared TypeScript types
+│   ├── prisma/
+│   │   ├── schema.prisma
+│   │   └── dev.db
+│   └── tests/
+
+## Data flow example — creating a task
+
+1. User fills out `TaskForm` and clicks "Save"
+2. Component calls `fetch('/api/tasks', { method: 'POST', body: ... })`
+3. `app/api/tasks/route.ts` receives the request, validates the body
+4. Calls `prisma.task.create(...)`
+5. Returns the new task as JSON
+6. UI updates the task list with the new entry
